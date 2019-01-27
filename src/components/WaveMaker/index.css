@@ -1,0 +1,9 @@
+.wavemaker {
+    width: 500px;
+    height: 500px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+}
