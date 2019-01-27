@@ -53,16 +53,11 @@ export default class WaveMaker extends React.Component {
         
                 for (var i = 0; i < bufferLength; i++) {
                     let barHeight = dataArray[i];
-        
-                    let r = barHeight + (25 * (i / bufferLength));
-                    let g = 250 * (i / bufferLength);
-                    let b = 50;
                     
-                    let transparent = this.props.secondary ? 1 : .5
                     let rectangle = {
-                        backgroundColor: "rgb(" + r + "," + g + "," + b + "," + transparent + ")",
                         height: barHeight,
-                        flex: 1
+                        flex: 1,
+                        backgroundColor: this.props.audioId === "audio-1" ? 'green' : 'red',
                     };
         
                     newArray.push(rectangle);
@@ -77,8 +72,10 @@ export default class WaveMaker extends React.Component {
 
 
     render() {
+        let { secondary } = this.props;
+        let toggleClass = secondary ? 'isSecondary' : 'isPrimary';
         return (
-            <div className="wavemaker">
+            <div className={`wavemaker ${toggleClass}`}>
                 {this.state.bufferBars.map((bar, index) => 
                     <div 
                         style={{...bar}} 
