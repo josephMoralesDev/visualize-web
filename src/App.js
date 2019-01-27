@@ -2,24 +2,19 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import WaveMaker from './components/WaveMaker/index';
+import AudioInput from './components/AudioInput/index';
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <AudioInput inputId="file-1" audioId="audio-1" />
+        <AudioInput inputId="file-2" audioId="audio-2" />
+        <div className="waveboard">
+          <WaveMaker inputId="file-1" audioId="audio-1" />
+          <WaveMaker inputId="file-2" audioId="audio-2" secondary/>
+        </div>
       </div>
     );
   }
