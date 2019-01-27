@@ -17,8 +17,8 @@ export default class WaveMaker extends React.Component {
     }
 
     visualizerSetup() {
-        var file = document.getElementById("thefile");
-        var audio = document.getElementById("audio");
+        var file = document.getElementById(this.props.inputId);
+        var audio = document.getElementById(this.props.audioId);
 
         file.onchange = () => {
             if(file.files) driver(file.files);
@@ -31,8 +31,6 @@ export default class WaveMaker extends React.Component {
             var context = new AudioContext();
             var src = context.createMediaElementSource(audio);
             var analyser = context.createAnalyser();
-
-            var wavemaker = document.querySelector(".wavemaker");
             
             src.connect(analyser);
             analyser.connect(context.destination);
@@ -40,20 +38,17 @@ export default class WaveMaker extends React.Component {
             analyser.fftSize = 256;
 
             var bufferLength = analyser.frequencyBinCount;
-            console.log(bufferLength);
 
             let dataArray = new Uint8Array(bufferLength);
 
-            let WIDTH = wavemaker.offsetWidth;
-
-            let barWidth = (WIDTH / bufferLength);
-
-
             audio.play();
+
             const renderFrame = () => {
                 requestAnimationFrame(renderFrame);
         
+                //this is going to be used for our new state
                 let newArray = [];
+
                 analyser.getByteFrequencyData(dataArray);
         
                 for (var i = 0; i < bufferLength; i++) {
@@ -62,9 +57,10 @@ export default class WaveMaker extends React.Component {
                     let r = barHeight + (25 * (i / bufferLength));
                     let g = 250 * (i / bufferLength);
                     let b = 50;
-        
+                    
+                    let transparent = this.props.secondary ? 1 : .5
                     let rectangle = {
-                        backgroundColor: "rgb(" + r + "," + g + "," + b + ")",
+                        backgroundColor: "rgb(" + r + "," + g + "," + b + "," + transparent + ")",
                         height: barHeight,
                         flex: 1
                     };
